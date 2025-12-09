@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 .gradio/
+.venv/
 __pycache__/
 assets/
 build/

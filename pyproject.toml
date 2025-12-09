@@ -15,7 +15,7 @@ description = "MEMFOF is a memory-efficient optical flow method for Full HD vide
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-  "torch>=2.5",
+  "torch>=2.6",
   "torchvision>=0.20",
   "einops>=0.8",
   "huggingface-hub>=0.35",
@@ -29,7 +29,7 @@ dev = [
   "lightning>=2.5",
   "opencv-python-headless>=4.12",
   "h5py>=3.14",
-  "scipy>=1.16",
+  "scipy>=1.15",
   "wandb>=0.22",
   "ipykernel>=6.30",
   "gradio>=5.46",
@@ -39,3 +39,4 @@ dev = [
 [project.urls]
 Homepage = "https://github.com/msu-video-group/memfof"
 Issues = "https://github.com/msu-video-group/memfof/issues"
+

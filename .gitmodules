@@ -1,0 +1,3 @@
+[submodule "memfof/depth_anything_v3/Depth_Anything_3"]
+	path = memfof/depth_anything_v3/Depth_Anything_3
+	url = git@github.com:ByteDance-Seed/Depth-Anything-3.git

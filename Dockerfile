@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     
 COPY pyproject.toml .
 RUN python3.10 -m pip install --upgrade pip setuptools wheel
+RUN python3.10 -m pip install -e memfof/depth_anything_v3/Depth_Anything_3/
 RUN python3.10 -m pip install -e .
 RUN python3.10 -m pip install -e .[dev]
 RUN apt-get update && apt-get install -y ffmpeg

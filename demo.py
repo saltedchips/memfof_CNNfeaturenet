@@ -80,6 +80,7 @@ def process_video(
 
     frames = []
     fmap_cache = [None] * 3
+    dmap_cache = [None] * 3  # Initialize depth map cache
 
     pbar = tqdm(range(total_frames - 1), total=total_frames - 1)
     if progress is not None:
@@ -110,7 +111,13 @@ def process_video(
                 continue
 
             frames_tensor = torch.stack(frames, dim=1).to(device)
-            output = model(frames_tensor, fmap_cache=fmap_cache)
+            
+            # Pass both caches to the model
+            output = model(
+                frames_tensor, 
+                fmap_cache=fmap_cache,
+                dmap_cache=dmap_cache
+            )
 
             forward_flow = output["flow"][-1][:, 1]  # FW [1, 2, H, W]
             flow_vis = flow_to_image(
@@ -119,9 +126,26 @@ def process_video(
             )
             writer.write_frame(flow_vis)
 
+            # Update caches from model output
             fmap_cache = output["fmap_cache"]
+            
+            # NEW: Get dmap_cache from output if it exists, otherwise maintain current
+            if "dmap_cache" in output:
+                dmap_cache = output["dmap_cache"]
+            
+            # If model doesn't return dmap_cache, you might need to extract it
+            # from the forward pass. Let's check what your model returns:
+            if "dmap_cache" not in output:
+                # You might need to modify your model to return dmap_cache
+                # For now, we'll keep the current dmap_cache
+                pass
+            
+            # Shift caches for next iteration (sliding window)
             fmap_cache.pop(0)
             fmap_cache.append(None)
+            
+            dmap_cache.pop(0)  # Shift depth cache too
+            dmap_cache.append(None)
 
             frames.pop(0)
 

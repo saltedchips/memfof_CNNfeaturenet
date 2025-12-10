@@ -3,8 +3,6 @@ services:
     build: .
     container_name: memfof-tester
     privileged: true
-    ports: #http://127.0.0.1:7861
-      - "7861:7861"
     shm_size: 4g
     mem_limit: 8g
     environment:
@@ -12,4 +10,4 @@ services:
     volumes:
       - .:/workspace
     working_dir: /workspace
-    command: python3.10 demo.py
+    command: tail -f /dev/null

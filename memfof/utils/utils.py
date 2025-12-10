@@ -80,20 +80,6 @@ def bilinear_sampler(img, coords, mode="bilinear", mask=False):
 
     return img
 
-def bilinear_sample(img, sample_coords):
-
-    b, _, h, w = sample_coords.shape
-
-    # Normalize to [-1, 1]
-    x_grid = 2 * sample_coords[:, 0] / (w - 1) - 1
-    y_grid = 2 * sample_coords[:, 1] / (h - 1) - 1
-
-    grid = torch.stack([x_grid, y_grid], dim=-1)  # [B, H, W, 2]
-
-    img = F.grid_sample(img, grid, mode='bilinear', padding_mode='zeros', align_corners=True)
-
-    return img
-
 
 def coords_grid(batch, ht, wd, device):
     coords = torch.meshgrid(
